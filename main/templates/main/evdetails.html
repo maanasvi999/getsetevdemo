@@ -1,0 +1,89 @@
+{% extends 'main/header.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col s12, m8, l8">
+            <h3>{{ev.ev_title}}</h3>
+            <p>{{ev.ev_summary|safe}}</p>
+            <img src="{{ ev.ev_image.url }}" height="100%" width="100%">
+            
+            <p>Highlights of the EV: </p>
+            {% for ev_high in ev_highs %}
+                <li>{{ev_high.ev_high1}}</li>
+                <li>{{ev_high.ev_high2}}</li>
+                <li>{{ev_high.ev_high3}}</li>
+                <li>{{ev_high.ev_high4}}</li>
+                <br/>
+            {% endfor %}
+                        
+        </div>
+
+        <div class="col s12 m4 l4">
+            <ul class="collapsible popout">
+                {% for ev in sidebar %}
+                    {% if forloop.counter0 == this_ev_idx %}
+                        <li class="active">
+                            <div class="collapsible-header">{{ev.ev_title}}<br>(currently viewing)</div>
+                      </li>
+                    {% else %}
+                        <li>
+                            <div class="collapsible-header">{{ev.ev_title}}</div>
+                            <div class="collapsible-body">
+                                <p><a href="/{{ev.ev_slug}}"><button class="btn waves-effect waves-light right-align" style="background-color:whitesmoke; color:black">Go</button></a></p>
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        {% for ev_model in ev_models %}
+            <div class="col s12 m6 l6">
+                <a href="#", style="color:#000">
+                    <div class="card hoverable">
+                        <div class="card-content">
+                            <div class="card-title">{{ev_model}}</div>
+                            <img src="{{ ev.ev_image.url }}" width="50%" height="50%">
+                            <p>Real Range Estimator (miles) in:</p>
+                            <li>City: {{ev_model.ev_model_city}}</li>
+                            <li>Highway: {{ev_model.ev_model_hwy}}</li>
+                            <li>Mix: {{ev_model.ev_model_mix}}</li>
+                            <img src = "{{ev_model.ev_image.url}}">
+                            <br/>
+                            <p>Highlights of the Model:</p>
+                                {% for ev_high in ev_highs %}
+                                    <li>{{ev_high.ev_high1}}</li>
+                                    <li>{{ev_high.ev_high2}}</li>
+                                    <li>{{ev_high.ev_high3}}</li>
+                                    <li>{{ev_high.ev_high4}}</li>
+                                {% endfor %}
+                            <br/>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}        
+    </div>
+
+    <div class="container">
+        <div class="col s12 m6 l6">
+            <h5> Available Color Variants</h5>
+            <div class="card">
+                <div class="card-content center">
+                    {% for ev_col in ev_colors %}
+                        <img src="{{ ev_col.ev_color.url }}" width="50%" height="50%">
+                        <br/>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include "main/includes/footer.html" %}
+    
+{% endblock %}
